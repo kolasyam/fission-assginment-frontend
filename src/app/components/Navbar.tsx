@@ -1,0 +1,95 @@
+'use client';
+import Link from 'next/link';
+import { useAuth } from '../context/AuthContext';
+import { useRouter, usePathname } from 'next/navigation';
+export default function Navbar() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
+  return (
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-xl font-bold text-indigo-600">Mini Event Platform</span>
+          </Link>
+          <div className="hidden md:flex items-center space-x-6">
+            <Link 
+              href="/" 
+              className={`${pathname === '/' ? 'text-indigo-600 font-semibold' : 'text-gray-700'} hover:text-indigo-800 transition-colors`}
+            >
+              Events
+            </Link>
+            {user && (
+              <>
+                <Link 
+                  href="/create-event" 
+                  className={`${pathname === '/create-event' ? 'text-indigo-600 font-semibold' : 'text-gray-700'} hover:text-indigo-800 transition-colors`}
+                >
+                  Create Event
+                </Link>
+                <Link 
+                  href="/dashboard" 
+                  className={`${pathname === '/dashboard' ? 'text-indigo-600 font-semibold' : 'text-gray-700'} hover:text-indigo-800 transition-colors`}
+                >
+                  Dashboard
+                </Link>
+              </>
+            )}
+          </div>
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <>
+                <span className="text-sm text-gray-700 hidden md:block">
+                  Welcome, <span className="font-semibold">{user.name}</span>
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="btn-secondary text-sm cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-gray-700 hover:text-primary-600 font-medium">
+                  Login
+                </Link>
+                <Link href="/register" className="btn-primary">
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+        {/* Mobile Menu */}
+        {user && (
+          <div className="md:hidden pb-4 space-y-2">
+            <Link 
+              href="/" 
+              className="block py-2 text-gray-700 hover:text-primary-600"
+            >
+              Events
+            </Link>
+            <Link 
+              href="/create-event" 
+              className="block py-2 text-gray-700 hover:text-primary-600"
+            >
+              Create Event
+            </Link>
+            <Link 
+              href="/dashboard" 
+              className="block py-2 text-gray-700 hover:text-primary-600"
+            >
+              Dashboard
+            </Link>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}

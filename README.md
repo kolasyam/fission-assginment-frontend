@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+MINI EVENT PLATFORM
+A full-stack event management platform built with React.js(Next.js, TypeScript), Node.js, Express.js, and MongoDB. Users can create events, RSVP to events, and manage their attendance with real-time capacity tracking and concurrency handling.
 
-## Getting Started
+User Authentication
+-Secure JWT-based authentication
+-User registration and login
+-Protected routes and API endpoints
 
-First, run the development server:
+Event Management
+-Create events with title, description, date, time, location, capacity, and image
+-Edit and delete own events
+-View all upcoming events
+-Search and filter events by keyword and date
+-Image upload with Cloudinary integration
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+RSVP System
+-RSVP to events with capacity enforcement
+-Cancel RSVP functionality
+-Real-time attendee count
+-Concurrency handling to prevent overbooking (race condition prevention)
+-One RSVP per user per event
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+User Dashboard
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+-View events created by user
+-View events user is attending
+-Quick access to event management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Responsive Design
+-Fully responsive UI using Tailwind CSS
+-Mobile, tablet, and desktop optimized
+-Modern card-based layout
+-Interactive hover effects
 
-## Learn More
+Concurrency Handling - Code
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+using MongoDB Transactions
+const session = await mongoose.startSession();
+session.startTransaction();
+Atomic Updates with Conditions
+const updatedEvent = await Event.findOneAndUpdate(
+  {
+    _id: eventId,
+    currentAttendees: { $lt: event.capacity }, // Check capacity atomically
+    attendees: { $ne: userId } // Ensure user not already registered
+  },
+  {
+    $push: { attendees: userId },
+    $inc: { currentAttendees: 1 }
+  },
+  {
+    new: true,
+    session
+  }
+);
