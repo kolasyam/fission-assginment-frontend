@@ -44,7 +44,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <>
-                <span className="text-sm text-gray-700 hidden md:block">
+                <span className="text-sm text-gray-700 font-medium px-1">
                   Welcome, <span className="font-semibold">{user.name}</span>
                 </span>
                 <button
@@ -69,6 +69,9 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {user && (
           <div className="md:hidden pb-4 space-y-2">
+            <div className="text-sm text-gray-700 font-medium px-1">
+                Welcome, <span className="font-semibold">{user.name}</span>
+            </div>
             <Link 
               href="/" 
               className="block py-2 text-indigo-700 hover:text-indigo-600"
@@ -107,6 +110,7 @@ export default function Navbar() {
         </div>
         )}
         {user && (
+            
             <div className="md:hidden pb-4">
                 <button
                 onClick={handleLogout}
