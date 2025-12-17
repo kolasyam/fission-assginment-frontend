@@ -41,7 +41,7 @@ export default function Navbar() {
               </>
             )}
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <>
                 <span className="text-sm text-gray-700 hidden md:block">
@@ -71,7 +71,7 @@ export default function Navbar() {
           <div className="md:hidden pb-4 space-y-2">
             <Link 
               href="/" 
-              className="block py-2 text-gray-700 hover:text-primary-600"
+              className="block py-2 text-indigo-700 hover:text-indigo-600"
             >
               Events
             </Link>
@@ -89,6 +89,33 @@ export default function Navbar() {
             </Link>
           </div>
         )}
+        {!user && (
+        <div className="md:hidden flex flex-col gap-2 pb-4">
+            <Link
+            href="/login"
+            className="w-full text-center border border-indigo-600 text-indigo-600 font-medium py-2 rounded-lg hover:bg-indigo-50 transition cursor-pointer"
+            >
+            Login
+            </Link>
+
+            <Link
+            href="/register"
+            className="w-full text-center btn-primary cursor-pointer"
+            >
+            Sign Up
+            </Link>
+        </div>
+        )}
+        {user && (
+            <div className="md:hidden pb-4">
+                <button
+                onClick={handleLogout}
+                className="w-full btn-secondary text-center py-2 cursor-pointer"
+                >
+                Logout
+                </button>
+            </div>
+            )}
       </div>
     </nav>
   );
