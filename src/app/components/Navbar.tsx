@@ -74,22 +74,22 @@ export default function Navbar() {
             </div>
             <Link 
               href="/" 
-              className="block py-2 text-indigo-700 hover:text-indigo-600"
+              className={`${pathname === '/' ? 'text-indigo-600 font-semibold' : 'text-gray-700'} hover:text-indigo-800 transition-colors block py-2`}
             >
               Events
             </Link>
-            <Link 
-              href="/create-event" 
-              className="block py-2 text-gray-700 hover:text-primary-600"
-            >
-              Create Event
-            </Link>
-            <Link 
-              href="/dashboard" 
-              className="block py-2 text-gray-700 hover:text-primary-600"
-            >
-              Dashboard
-            </Link>
+                <Link 
+                  href="/create-event" 
+                  className={`${pathname === '/create-event' ? 'text-indigo-600 font-semibold' : 'text-gray-700'} hover:text-indigo-800 transition-colors block py-2`}
+                >
+                  Create Event
+                </Link>
+                <Link 
+                  href="/dashboard" 
+                  className={`${pathname === '/dashboard' ? 'text-indigo-600 font-semibold' : 'text-gray-700'} hover:text-indigo-800 transition-colors block py-2`}
+                >
+                  Dashboard
+                </Link>
           </div>
         )}
         {!user && (
