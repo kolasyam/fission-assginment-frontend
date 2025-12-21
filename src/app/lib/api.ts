@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AuthResponse, EventsResponse, SingleEventResponse } from '../types';
-const API_URL = "https://fission-assginment-backend.onrender.com";
+const API_URL = "https://fission-assginment-backend-k9kh.onrender.com";
 const api = axios.create({
   baseURL: API_URL,
 });
