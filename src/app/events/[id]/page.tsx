@@ -33,7 +33,7 @@ export default function EventDetailPage() {
   };
   const handleRSVP = async () => {
     if (!user) {
-      toast.error('Please login to RSVP');
+      toast.error('Please login to join');
       router.push('/login');
       return;
     }
@@ -41,9 +41,9 @@ export default function EventDetailPage() {
     try {
       const response = await rsvpAPI.rsvpToEvent(id);
       setEvent(response.data.event);
-      toast.success('Successfully RSVP\'d to event!');
+      toast.success('Successfully joined\'d to event!');
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to RSVP');
+      toast.error(error.response?.data?.message || 'Failed to join');
     } finally {
       setActionLoading(false);
     }
@@ -53,9 +53,9 @@ export default function EventDetailPage() {
     try {
       const response = await rsvpAPI.cancelRsvp(id);
       setEvent(response.data.event);
-      toast.success('RSVP cancelled successfully');
+      toast.success('Event cancelled successfully');
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to cancel RSVP');
+      toast.error(error.response?.data?.message || 'Failed to cancel event');
     } finally {
       setActionLoading(false);
     }
@@ -160,7 +160,7 @@ export default function EventDetailPage() {
                     className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
                     disabled={actionLoading}
                   >
-                    {actionLoading ? 'Cancelling...' : 'Cancel RSVP'}
+                    {actionLoading ? 'Cancelling...' : 'Cancel event'}
                   </button>
                 ) : (
                   <button
@@ -178,7 +178,7 @@ export default function EventDetailPage() {
                 onClick={() => router.push('/login')}
                 className="btn-primary mt-4 md:mt-0"
               >
-                Login to RSVP
+                Login to Join
               </button>
             )}
           </div>
@@ -259,7 +259,7 @@ export default function EventDetailPage() {
               </h3>
               <div className="bg-gray-50 rounded-lg p-4">
                 <p className="text-gray-600 text-sm">
-                  {event.currentAttendees} {event.currentAttendees === 1 ? 'person has' : 'people have'} RSVPd to this event
+                  {event.currentAttendees} {event.currentAttendees === 1 ? 'person has' : 'people have'} joined to this event
                 </p>
               </div>
             </div>
